@@ -1,0 +1,110 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class="centermain">
+    <main>
+        <h2>Wispar Profile</h2>
+        <div class="actionBox">
+            <span>Currently logged in as {{ user }}.</span>
+            <form action="/profile/logout/">
+                <button id="logout-button" type="submit">Log out</button>
+            </form>
+
+        </div>
+        <h2>Settings</h2>
+        <div class="settings-block">
+            <div class="settings-block-inner">
+                
+                <div class="settings-header-inner">
+                    <h2>Personal Settings</h2>
+                </div>
+
+                <div class="settings-form">
+                    <label for="user_name">User Name:</label>
+                    <input type="text" id="user_name" readonly="readonly" value=" {{ user }}">
+                </div>
+
+                <div class="settings-form">
+                    <label class="settings-header-label" for="theme">Theme:</label>
+                    
+                    <form id="theme" name="theme" enctype="multipart/form-data" action="/personal/theme" method="POST">
+                        {% csrf_token %}
+                        {% for theme in themes %}
+                        <div>
+                            <input type="radio" id="{{ theme }}_theme" name="wispar_theme" value="{{ theme }}">
+                            <label for="{{ theme }}_theme">{{ theme|capfirst }}</label>
+                        </div>                        
+                        {% endfor %}
+                    </form>
+                </div>
+                <div class="settings-form">
+                    <label class="settings-header-label" for="radius">UI Style:</label>
+                    
+                    <form id="radius" name="radius" enctype="multipart/form-data" action="/personal/radius" method="POST">
+                        {% csrf_token %}
+                        <div>
+                            <input type="radio" id="square" name="radius" value="square">
+                            <label for="square">Squared</label>
+                            <input type="radio" id="round" name="radius" value="round">
+                            <label for="round">Rounded</label>
+                        </div>                        
+                    </form>
+                </div>
+                <div class="settings-form">
+                    <form id="uiFont" name="uiFont" enctype="multipart/form-data" action="/personal/uifont" method="POST">
+                        {% csrf_token %}
+                        <label for="uiFont">Interface Font:</label>
+                        <select name="interface-font-select" id="interface-font-select">
+                            <option value="Libre Baskerville">Libre Baskerville</option>
+                            <option value="EB Garamond">EB Garamond</option>
+                            <option value="Zilla Slab">Zilla Slab</option>
+                            <option value="Inter">Inter</option>
+                            <option value="Roboto Slab">Roboto Slab</option>
+                        </select>
+                    </form>
+                </div>
+                <div class="settings-header-inner">
+                    <h2>Home Screen</h2>
+                </div>
+                <div class="settings-form">
+                    <meta id="row_one" name="{{ row_one }}" title="{{ row_one_title }}" content="{{ row_one_visible }}"/>
+                    <meta id="row_two" name="{{ row_two }}" title="{{ row_two_title }}" content="{{ row_two_visible }}"/>
+                    <meta id="row_three" name="{{ row_three }}" title="{{ row_three_title }}" content="{{ row_three_visible }}"/>
+                    <meta id="library-visible" name="library" title="Library" content="{{ library_visible }}"/>
+                    <form name="home-screen" id="home-screen" enctype="multipart/form-data" action="/personal/homepage" method="POST">
+                        {% csrf_token %}
+                        <ul id="home-row-order">
+
+                        </ul>
+                        <input type="hidden" id="row_order" name="row_order" value="{{ row_order }}">
+                    </form>
+                </div>
+
+                <div class="settings-header-inner">
+                    <h2>Override Default eBook Settings</h2> 
+                </div>
+
+                <div class="settings-form">
+                    <form name="custom-epub" id="custom-epub" enctype="multipart/form-data" method="POST" action="/personal/epubDefault">
+                        {% csrf_token %}
+                        <input type="checkbox" id="custom-epub-default" name="custom-epub-default" {{ custom_epub_default |yesno:"checked," }}>
+                        <label for="custom-epub-default">Apply Personal Style Settings in ePub</label>
+                    </form>
+                </div>
+
+                <div class="settings-header-inner">
+                    <h2>Audiobook</h2>
+                </div>
+
+                <div class="settings-form">
+                    <label for="playback_speed">Playback Speed</label>
+                    <input type="range" min="0.25" max="3" value="1" step="0.25" class="slider" id="playback_speed">
+                    <!-- Add JS to display slider value (1.0x, 0.5x, 2.0x, etc.) -->
+                </div>
+                
+            </div>
+        </div>
+    </main>
+</div>
+<script type="module" src="../static/js/personal.js"></script>
+{% endblock %}

@@ -1,0 +1,10 @@
+uploads/*
+db.sqlite3
+*.pyc
+.DS_Store
+autotester
+*~
+.vscode/launch.json
+books/*
+volume/*
+*.env

@@ -1,0 +1,47 @@
+<meta name="custom-epub-default" content="{{ custom_epub_default }}">
+<div id="navigation" class="custom-select">
+  <div id="bookmark-page">
+    <div class="two-rem-icon">
+      <svg xmlns="http://www.w3.org/2000/svg" id="not-bookmarked" width="2rem" height="2rem" viewBox="0 0 384 512">
+        <path fill="currentColor" d="M336 0H48C21.49 0 0 21.49 0 48v464l192-112l192 112V48c0-26.51-21.49-48-48-48zm0 428.43l-144-84l-144 84V54a6 6 0 0 1 6-6h276c3.314 0 6 2.683 6 5.996V428.43z"/>
+      </svg>
+      <svg xmlns="http://www.w3.org/2000/svg" id="is-bookmarked" width="2rem" height="2rem" viewBox="0 0 384 512">
+        <path fill="currentColor" d="M0 512V48C0 21.49 21.49 0 48 0h288c26.51 0 48 21.49 48 48v464L192 400L0 512z"/>
+      </svg>
+    </div>
+  </div>
+  <select id="toc" value='toc'></select>
+  <button class="delete" name="delete-annotation" id="delete-annotation" disabled>X</button>
+  <select id="bookmarks">
+    <option value="Bookmarks" selected>Bookmarks</option>
+    {% for bookmark in bookmarks %}
+      <option value="{{ bookmark.text_location }}">
+        {{ bookmark.location_text_snippet|default:"Last Read Position"|slice:"20" }}{% if bookmark.location_text_snippet|length > 19 %}...{% endif %}
+      </option>
+    {% endfor %}
+  </select>
+  <div class="two-rem-icon" id="settingsBtn">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 15 15">
+      <g fill="none" fill-rule="evenodd" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+        <path stroke-width="1.0" d="M7.5.5c.351 0 .697.026 1.034.076l.508 1.539c.445.127.868.308 1.26.536l1.46-.704c.517.397.977.865 1.365 1.389l-.73 1.447c.221.396.395.822.514 1.27l1.53.533a7.066 7.066 0 0 1-.017 1.948l-1.539.508a5.567 5.567 0 0 1-.536 1.26l.704 1.46a7.041 7.041 0 0 1-1.389 1.365l-1.447-.73a5.507 5.507 0 0 1-1.27.514l-.533 1.53a7.066 7.066 0 0 1-1.948-.017l-.508-1.539a5.567 5.567 0 0 1-1.26-.536l-1.46.704a7.041 7.041 0 0 1-1.365-1.389l.73-1.447a5.565 5.565 0 0 1-.514-1.27l-1.53-.534a7.066 7.066 0 0 1 .017-1.947l1.539-.508c.127-.445.308-.868.536-1.26l-.704-1.46a7.041 7.041 0 0 1 1.389-1.365l1.447.73a5.507 5.507 0 0 1 1.27-.514l.534-1.53A7.06 7.06 0 0 1 7.5.5z"></path>
+        <circle stroke-width="1.0" cx="7.5" cy="7.5" r="3"></circle>
+      </g>
+    </svg>
+  </div>
+</div>
+<span id="reader-row" class="library-row">
+  <a id="prev" class="unselectable arrow" href="#prev">‹</a>
+  <main id="viewer" class="spreads"></main>
+  <a id="next" class="unselectable arrow" href="#next">›</a>
+  <div id="end-of-chapter-spacer"></div>
+</span>
+<div id="textPopup">
+  <button id="defineBtn">Define</button>
+  <button id="wikiBtn">Wiki</button>
+  <button id="highlightBtn">Highlight</button>
+  <button id="bookmarkBtn">Bookmark</button>
+  <div id="definition"></div>
+</div>
+<div id="epub-settings">
+  {% include 'epubsettingsmodal.html' %}
+</div>

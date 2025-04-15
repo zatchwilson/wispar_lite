@@ -1,0 +1,121 @@
+.Classic-Light {
+
+	color: black;
+	background-color: white;
+}
+
+.Modern-Light {
+	color: #2c2c2c;
+	background-color: rgb(236, 239, 241);
+}
+
+.Modern-Dark {
+	color: #c1cccc;
+	background-color: rgb(18, 18, 18);
+
+}
+
+/* Data theme which allows us to create different theme types */
+
+.Classic-Dark {
+	color: rgb(163, 163, 163);
+	background-color: rgb(0, 0, 0);
+}
+
+.Urban-Fog {
+	color: rgb(163, 163, 163);
+	background-color: rgb(50, 50, 50);
+}
+
+.Paperwhite {
+	color: black;
+	background-color: white;
+}
+
+.Void-Luminescence {
+	color: white;
+	background-color: black;
+}
+
+.Ocean-Depths {
+	color: rgb(183, 226, 255);
+	background-color: rgb(49, 81, 150);
+}
+
+.Emerald-Canopy {
+	color: rgb(212, 255, 199);
+	background-color: rgb(44, 110, 37);
+
+}
+
+.Twilight-Bloom {
+	color: rgb(245, 194, 255);
+	background-color: rgb(123, 66, 129);
+
+}
+
+.Frosted-Horizon {
+	color: #051230;
+	background-color: rgb(151, 172, 200);
+
+}
+
+.Sunset-Marina {
+	color: #eeb480;
+	background-color: rgb(0, 91, 141);
+}
+
+.Skyline-Mist {
+	color: #064f6e;
+	background-color: rgb(167, 212, 228);
+}
+
+.Velvet-Dusk {
+	color: #b0b4c4;
+	background-color: rgb(140, 76, 98);
+}
+
+.Meadow-Breeze {
+	color: #333941;
+	background-color: rgb(150, 209, 170);
+}
+
+.Golden-Ember {
+	color: #111314;
+	background-color: rgb(235, 211, 162);
+}
+
+.Seafoam-Serenity {
+	color: #34454c;
+	background-color: rgb(181, 222, 204);
+}
+
+.Desert-Mirage {
+	color: #111314;
+	background-color: rgb(180, 205, 194);
+}
+
+.Golden-Harvest {
+	color: #051230;
+	background-color: rgb(166, 161, 89);
+}
+
+.Stormy-Harbor {
+	color: #005b8d;
+	background-color: rgb(112, 114, 124);
+}
+
+.Charcoal-Ember {
+	color: #111314;
+	background-color: rgb(182, 191, 193);
+}
+
+.Sunlit-Blush {
+	color: #a62c37;
+	background-color: rgb(255, 239, 174);
+}
+
+.Autumn-Fog {
+	color: #253122;
+	background-color: rgb(182, 191, 193);
+}

@@ -1,0 +1,58 @@
+<!-- The dimmed overlay -->
+<div class="overlay" id="overlay"></div>
+<div class="modal" id="modal">
+  <h2>Book Display Settings</h2>
+  <div id="settings-list"></div>
+  <div id="font-size-controls">
+    <div class="two-rem-icon" id="font-size-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 24 24">
+        <path fill="currentColor" d="m22 6l-3-4l-3 4h2v4h-2l3 4l3-4h-2V6zM9.307 4l-6 16h2.137l1.875-5h6.363l1.875 5h2.137l-6-16H9.307zm-1.239 9L10.5 6.515L12.932 13H8.068z" />
+      </svg>
+    </div>
+    <input type="number" min="25" max="300" step="5" value="100" id="font-value" />
+    <p>%</p>
+    <input type="range" name="font-size" id="font-size" min="25" max="300" step="5" value="100" />
+  </div>
+  <div id="font-size-controls">
+    <div class="two-rem-icon" id="font-size-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 1200 1200">
+        <path fill="currentColor" d="M335.151 763.202h435.208L552.753 199.336L335.147 763.202M.004 1192.852v-84.182h104.038L526.542 7.148h133.42l423.294 1101.521H1200v84.182H768.761v-84.182h131.834l-99.271-260.488H302.581l-99.272 260.488h130.244v84.182H0" />
+      </svg>
+    </div>
+    <select name="font-fam" id="font-fam">
+      <option value="">Default</option>
+      <option value="Libre Baskerville">Libre Baskerville</option>
+      <option value="EB Garamond">EB Garamond</option>
+      <option value="Zilla Slab">Zilla Slab</option>
+      <option value="Inter">Inter</option>
+      <option value="Roboto Slab">Roboto Slab</option>
+      <option value="Arial">Arial</option>
+    </select>
+  </div>
+  <div id="font-size-controls">
+    <div class="two-rem-icon" id="font-size-btn">
+      <svg xmlns="http://www.w3.org/2000/svg" width="2rem" height="2rem" viewBox="0 0 440 384">
+        <path fill="currentColor" d="M96 85v214h53l-74 74l-75-74h53V85H0l75-74l74 74H96zm85-42h256v42H181V43zm0 298v-42h256v42H181zm0-128v-42h256v42H181z"/>
+      </svg>
+    </div>
+    <select name="leading" id="leading">
+      <option value="">Default</option>
+      <option value="1">1</option>
+      <option value="1.15">1.15</option>
+      <option value="1.5">1.5</option>
+      <option value="2">2</option>
+    </select>
+  </div>
+  <!-- Buttons -->
+  <div class="buttons">
+    <button type="button" class="cancel" id="donewsettings">Done</button>
+  </div>
+</div>
+
+<div id="confirm-modal" class="modal">
+  <h2>Are You Sure?</h2>
+  <div id="confirm-deny">
+    <button id="cancel-delete">Cancel</button>
+    <button class="delete" id="delete-confirm">DELETE</button>
+  </div>
+</div>

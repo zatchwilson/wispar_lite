@@ -1,0 +1,15 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class=centermain>
+    <main>
+        {% include "librarygrid.html" %}
+        {% with library|length as num_books %}
+        {% if num_books == 0 %}
+        <p>No books were found, please try searching something else.</p>
+        {% endif %}
+        {% endwith %}
+    </main>
+</div>
+
+{% endblock %}

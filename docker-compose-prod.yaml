@@ -1,0 +1,75 @@
+services:
+  db:
+    image: mariadb:10.11
+    container_name: mariadb-prod-container
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_bin
+    environment:
+      #data pulled from the env file
+      MARIADB_DATABASE: ${DB_NAME}
+      MARIADB_USER: ${DB_USER}
+      MARIADB_ROOT_PASSWORD: ${DB_PASSWORD} 
+    ports: 
+      - 3306:3306
+    volumes:
+      - mariadb_volume:/var/lib/mysql
+    env_file:
+    - .env
+    restart: unless-stopped
+
+
+  wispar:
+    build:
+      dockerfile: wispar.Dockerfile
+    command: >
+        bash -c "python manage.py migrate
+        && python manage.py collectstatic --no-input
+        && python manage.py createsuperuser --no-input || :
+        && gunicorn wispar.wsgi:application --bind 0.0.0.0:8000 --timeout 120"
+
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+    volumes: 
+      - shared_volume:/app/volume
+    container_name: django-prod-container
+    expose:
+     - 8000
+    depends_on: 
+    - db
+    environment:
+      DEBUG: ${DEBUG}
+      DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
+      DB_ENGINE: ${DB_ENGINE}
+      DB_NAME: ${DB_NAME}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      DB_HOST: ${DB_HOST}
+      DB_PORT: 3306
+      DJANGO_SUPERUSER_USERNAME: ${DJANGO_SUPERUSER_USERNAME}
+      DJANGO_SUPERUSER_PASSWORD: ${DJANGO_SUPERUSER_PASSWORD}
+      DJANGO_SUPERUSER_EMAIL: ${DJANGO_SUPERUSER_EMAIL}
+      USE_ALIGN: ${USE_ALIGN}
+      DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
+      EDIT_DISTANCE: ${EDIT_DISTANCE}
+    env_file:
+     - .env
+
+  nginx:
+    build:
+      context: nginx
+      dockerfile: nginx.Dockerfile
+    volumes:
+      - shared_volume:/app/volume
+    ports:
+      - 1337:80
+    depends_on: 
+      - wispar
+
+volumes: 
+  mariadb_volume:
+  shared_volume:

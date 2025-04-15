@@ -1,0 +1,98 @@
+{% load static %}
+<div id="player-bar" class="unselectable">
+    <img id="player-bar-poster" src="/books/cover/{{ book_id }}" />
+    <div id="control-row">
+        <div id="collapse-expand">
+            <div id="collapse">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 20 20">
+                    <path fill="currentColor" d="m17.5 4.75l-7.5 7.5l-7.5-7.5L1 6.25l9 9l9-9z" />
+                </svg>
+            </div>
+            <div id="expand">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 20 20">
+                    <path fill="currentColor" d="m2.5 15.25l7.5-7.5l7.5 7.5l1.5-1.5l-9-9l-9 9z" />
+                </svg>
+            </div>
+        </div>
+    
+        <div id="audioplayer">
+            <div id="speed-ui">
+                <input type="range" id="speedControl" min="0.5" max="2" step="0.1" value="1">
+                <span id="speedValue">1.0x</span>
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 48 48">
+                    <g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4">
+                        <path stroke-linecap="round" d="M34.023 6.69A19.908 19.908 0 0 0 24 4C12.954 4 4 12.954 4 24s8.954 20 20 20s20-8.954 20-20c0-3.627-.966-7.03-2.654-9.962" />
+                        <path d="M31.95 16.05S28.562 25.095 27 26.657A4 4 0 0 1 21.343 21c1.562-1.562 10.607-4.95 10.607-4.95Z" />
+                    </g>
+                </svg>
+            </div>
+            <!-- Rewind Button -->
+            <div id="rewind">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8s8 3.589 8 8s-3.589 8-8 8z"/>
+                    <path fill="currentColor" d="M11 16V8l-5 4zm6 0V8l-5 4z"/>
+                </svg>
+            </div>
+            <div id="play">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 48 48">
+                    <g fill="none" stroke="currentColor" stroke-linejoin="round" stroke-width="4">
+                        <path d="M24 44c11.046 0 20-8.954 20-20S35.046 4 24 4S4 12.954 4 24s8.954 20 20 20Z" />
+                        <path d="M20 24v-6.928l6 3.464L32 24l-6 3.464l-6 3.464V24Z" />
+                    </g>
+                </svg>
+            </div>
+    
+            <div id="pause">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 16 16">
+                    <path fill="currentColor"
+                        d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0zm0 14.5a6.5 6.5 0 1 1 0-13a6.5 6.5 0 0 1 0 13zM5 5h2v6H5zm4 0h2v6H9z" />
+                </svg>
+            </div>
+            <div id="fastforward">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon"  viewBox="0 0 24 24"><path fill="currentColor" d="M12 2C6.486 2 2 6.486 2 12s4.486 10 10 10s10-4.486 10-10S17.514 2 12 2zm0 18c-4.411 0-8-3.589-8-8s3.589-8 8-8s8 3.589 8 8s-3.589 8-8 8z"/><path fill="currentColor" d="m13 16l5-4l-5-4zm-6 0l5-4l-5-4z"/>
+                </svg>
+              </div>
+            <div id="volume-ui">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 24 24">
+                    <path fill="currentColor" d="M12.43 4.1a1 1 0 0 0-1 .12L6.65 8H3a1 1 0 0 0-1 1v6a1 1 0 0 0 1 1h3.65l4.73 3.78A1 1 0 0 0 12 20a.91.91 0 0 0 .43-.1A1 1 0 0 0 13 19V5a1 1 0 0 0-.57-.9ZM11 16.92l-3.38-2.7A1 1 0 0 0 7 14H4v-4h3a1 1 0 0 0 .62-.22L11 7.08Zm8.66-10.58a1 1 0 0 0-1.42 1.42a6 6 0 0 1-.38 8.84a1 1 0 0 0 .64 1.76a1 1 0 0 0 .64-.23a8 8 0 0 0 .52-11.79Zm-2.83 2.83a1 1 0 1 0-1.42 1.42A2 2 0 0 1 16 12a2 2 0 0 1-.71 1.53a1 1 0 0 0-.13 1.41a1 1 0 0 0 1.41.12A4 4 0 0 0 18 12a4.06 4.06 0 0 0-1.17-2.83Z" />
+                </svg>
+                <span id="volumeValue">100%</span>
+                <input type="range" id="volumeControl" min="0" max="1" step="0.05" value="1">
+            </div>
+    
+            <audio id="audio-player" preload="auto">
+                {% if audiobook %}
+    
+                    <source src="{% url 'stream_audio' audiobook.path %}" type="audio/mpeg">
+                {% endif %}
+                {% if vtt %}
+                    <track id="textTrack" kind="subtitles" src="/books/vtt/{{ vtt }}" srclang="en" label="English">
+                {% endif %}
+                Your browser does not support the audio element.
+            </audio>
+        </div>
+    
+        <div id="sleep-timer-ui">
+            <label for="sleep-timer-duration"><span id="timer-value">45</span> min:</label>
+            <input type="range" id="sleep-timer-duration" min="5" max="120" step="5" value="45">
+            <div id="sleep-timer">
+                <svg xmlns="http://www.w3.org/2000/svg" class="two-rem-icon" viewBox="0 0 14 14">
+                    <g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M13.5 7A6.5 6.5 0 1 1 7 .5"/>
+                        <path d="M7 4.5V7L4.46 9.96M10 .5h3.5l-3.5 4h3.5"/>
+                    </g>
+                </svg>
+            </div>
+        </div>
+    </div>
+    <div id="progress-background-wrapper">
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+            <div id="progress-time">
+                <span id="current-time">0:00</span>
+                <span id="duration">0:00</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="toast" class="toast hidden">Sleep timer started!</div>

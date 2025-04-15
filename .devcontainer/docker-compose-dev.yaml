@@ -1,0 +1,41 @@
+services:
+
+  wispar:
+    build:
+      context: ..
+      dockerfile: wispar.dev.Dockerfile
+    environment:
+      DB_NAME: "wispar_db"
+      DB_USER: "root"
+      DB_PASSWORD: "password"
+      DB_HOST: "db"
+
+    volumes:
+      - ../..:/workspaces:cached
+
+    command: sleep infinity
+
+    network_mode: service:db
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - driver: nvidia
+    #           count: all
+    #           capabilities: [gpu]
+
+  db:
+    image: mariadb:10.11
+    restart: unless-stopped
+    environment:
+      #data pulled from the env file
+      MARIADB_DATABASE: wispar_db
+      MARIADB_USER: root
+      MARIADB_ROOT_PASSWORD: password
+    ports: 
+      - "3306:3306"
+    volumes:
+      - dev_db_volume:/var/lib/mysql
+
+volumes:
+  dev_db_volume:

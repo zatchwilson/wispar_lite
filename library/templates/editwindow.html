@@ -1,0 +1,66 @@
+<!-- The dimmed overlay -->
+<div class="overlay" id="overlay"></div>
+{% for book in library %}
+    <div class="modal" id="modal-{{ book.bookId }}">
+        <h2>Edit {{ book.title }} Metadata</h2>
+        <form action="" class="metadata-form" method="PUT">
+            {% csrf_token %}
+            <div id="edit-top-row">
+                <div>
+                    <label for="title">Title: {{ book.title }}</label>
+                    <input type="text" id="title" name="title" placeholder="{{ book.title }}" />
+
+                    <label for="author">Author: {{ book.author }}</label>
+                    <input type="text" id="author" name="author" placeholder="{{ book.author }}" />
+                </div>
+                <img id="edit-cover-{{ book.bookId }}" class="edit-cover" src="../books/cover/{{ book.bookId }}">
+            </div>
+            <div id="cover-images-{{ book.bookId }}" class="cover-images">
+                <input type="hidden" id="selectedImage-{{ book.bookId }}" name="selectedImage-{{ book.bookId }}">
+                <div id="no-covers-found">No Alternate Covers Found</div>
+            </div>
+            <label for="isbn">ISBN: {{ book.isbn }}</label>
+            <input type="text" id="isbn" name="isbn" placeholder="{{ book.isbn }}" />
+
+            <label for="publisher">Publisher:</label>
+            <input type="text" id="publisher" name="publisher" placeholder="Publisher" />
+
+            <label for="pub-date">Publication Date: {{ book.publication_date }}</label>
+            <input type="date" id="pub-date" name="pub-date" placeholder="{{ book.publication_date }}" />
+
+            <label for="language">Language:</label>
+            <input type="text" id="language" name="language" placeholder="{{ book.language }}" />
+
+            {% if user_perms.is_superuser %}
+            <p class="permissions-title">Content Visible to Roles: </p>
+            <div class="permissions-boxes">
+                {% for group in groups %}
+                <label class="container permissions">
+                    {{ group.name }}<input type="checkbox" id="{{ group.name }}-toggle" name="{{ group.name }}-toggle" value="{{ group.name }}-toggle" {% if book.id not in group.banned_books %}checked{% endif %}/>
+                    <span class="checkmark"></span>
+                </label>
+                {% endfor %}
+            </div>
+ 
+
+            {% endif %}
+
+            <input hidden="True" type="number" id="bookId" name="bookId" value="{{ book.bookId }}"/>
+            <!-- Buttons -->
+            <div class="buttons">
+                {% if user_perms.is_superuser or user_perms.can_delete_books %}
+                <button type="button" class="delete" id="delete-{{ book.bookId }}">Delete</button>
+                {% endif %}
+                <button type="button" class="cancel" id="cancel-{{ book.bookId }}">Cancel</button>
+                <button type="submit">Save</button>
+            </div>
+        </form>
+    </div>
+{% endfor %}
+<div id="confirm-modal" class="modal">
+    <h2>Are You Sure?</h2>
+    <div id="confirm-deny">
+        <button id="cancel-delete">Cancel</button>
+        <button class="delete" id="delete-confirm">DELETE</button>
+    </div>
+</div>

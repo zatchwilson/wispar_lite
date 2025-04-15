@@ -1,0 +1,118 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<meta name="permissions_set" content="{{ groups_dict_json }}">
+<meta name="registrations_are_active" content = "{{ registrations_are_active }}">
+<div class="centermain">
+    <main>
+        <h2>User Management</h2>
+        <output>{{ error_message }}</output>
+        <div id="users_parent">
+            <div class="settings-block block-left">
+                <div class="settings-block-inner">
+                    <div class="settings-header-inner"></div>
+                        <form action="/users/" method="POST">
+                            {% csrf_token %}
+                            <div class="settings-form">
+                                <table class="sortable">
+                                    <thead>
+                                    <tr>
+                                        <th class="sort-column">User</th>
+                                        <th class="sort-column">Role</th>
+                                        {% if request.user.is_superuser %}
+                                        <th></th>
+                                        {% endif %}
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    {% for user in users %}
+                                        <tr>
+                                        <td>{{ user.username }}</td>
+                                        <td>
+                                            <select class="custom-select" name="{{ user.username }}-select-role" id="{{ user.username}}-select-role">
+                                                <option value="{{ user.group_name }}"> {{ user.group_name }}</option>
+                                                {% for group_name in groups_list %}
+                                                {% if group_name != user.group_name %}
+                                                <option value="{{ group_name }}">{{ group_name }}</option>
+                                                {% endif %}
+                                                {% endfor %}
+                                            </select>
+                                        </td>
+                                        {% if request.user.is_superuser %}
+                                        <td>
+                                            <button name="delete-user-button" type="submit" value="{{user.username}}">Delete Account</button>
+                                        </td>
+                                        {% endif %}
+                                        </tr>
+                                    {% endfor %}
+                                    </tbody>
+                                </table>
+                                <label for="submit-role-changes"></label>
+                                <button type="submit" id="submit-role-changes" name="change-roles-button" value="change-roles-button">Submit Changes</button>
+                            </div>
+                        </form>
+                </div>
+            </div>
+
+            <div class="settings-block block-right">
+                <form action="/users/" method="POST">
+                    <div class="settings-block-inner">  
+                        <div class="settings-header-inner">
+                            <h2>Role:</h2>
+                        </div>
+                        <select class="custom-select" name="select-role" id="select-role">
+                            <option value="">--Choose a Role--</option>
+                            <option value="createNewGroup">Create a new group</option>
+                            {% for group_name in groups_list %}
+                            <option value="{{ group_name }}">{{ group_name }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                        {% csrf_token %}
+                        <div class="settings-block-inner">
+                            <label for="new_group_name_input" class="hidden_new_group_name_input">New Role Name:</label>
+                            <input name="new_group_name_input" class="hidden_new_group_name_input" id="new_group_name_input" type="text">
+                            <p class="hidden_new_group_name_input"><em>Group name must be between 2-30 characters long</em></p>
+                            <div class="settings-header-inner">
+                                <h2>Role Permissions</h2>
+                            </div>
+
+                            <div class="roles-container">
+                                <label class="container">
+                                    Add Content<input type="checkbox" id="add_content_check" name="add_content_check"/>
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="container">
+                                    Remove Content<input type="checkbox" id="remove_content_check" name="remove_content_check"/>
+                                    <span class="checkmark"></span>
+                                </label>
+
+                                <label class="container">
+                                    Manage Roles<input type="checkbox" id="manage_perms_check" name="manage_perms_check"/>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="role-btns">
+                            <button class="delete-hidden" id="delete-role-button" name="delete-button" value="delete-role">Delete Role</button>
+                            <button class='new-role-hidden' id="new-role-button" name="new-role-button" type='submit' value="new-role">Make New Role</button>  
+                            <button class='edit-role-hidden' id="edit-role-button" name="edit-role-button" type='submit' value="edit-role">Submit Changes</button>
+                        </div>
+                </form>
+            </div>
+            
+        </div>  
+        {% if request.user.is_superuser %}
+            <form id="registration_toggle_form" action="/profile/register/toggle/" method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <label class="container">
+                    User Registration Active<input type="checkbox" id="registration_toggle" name="user-registration-toggle"/>
+                    <span class="checkmark"></span>
+                </label>
+            </form>
+            {% endif %}
+    </main>
+</div>
+<script type="module" src="/static/js/users.js"></script>
+{% endblock %}

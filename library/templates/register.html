@@ -1,0 +1,39 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
+<div class=centermain>
+    <main>
+        <h2>Register your account</h2>
+        <output>{{ register_error }}</output>
+        <form action="/profile/register/" method="POST">
+            {% csrf_token %}
+            <div class="row">
+                <label>Username:</label>
+                <input type="text" name="username" id="register_username" autofocus required>
+            </div>
+            <div class="row">
+                <label>Password:</label>
+                <input type="password" name="password" id="register_password" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required>
+            </div>
+            <div class="row">
+                <label>Confirm Password:</label>
+                <input type="password" name="confirm_password" id="register_confirm_password" required>
+            </div>
+            <p id="passwords_must_match">Passwords must match in both fields.</p>
+            <div id="password_requirements_message">
+                <h3>Password must contain the following:</h3>
+                <p id="letter" class="password_invalid">A <b>lowercase</b> letter</p>
+                <p id="capital" class="password_invalid">A <b>capital (uppercase)</b> letter</p>
+                <p id="number" class="password_invalid">A <b>number</b></p>
+                <p id="length_req" class="password_invalid">Minimum <b>8 characters</b></p>
+              </div>
+            <div class="center">
+                <button id="registerUserButton" type="submit" value="Submit" disabled="true">Register User</button>
+            </div>
+            <input type="hidden" name="next" value="{{ next }}">
+        </form>
+    <script type="module" src="/static/js/register.js"></script>
+    </main>
+    </div>
+{% endblock %}

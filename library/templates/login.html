@@ -1,0 +1,32 @@
+{% extends 'header.html' %}
+
+{% block content %}
+  <div class="centermain">
+    <main>
+      <h2>Log in</h2>
+      <output>{{ login_error }}</output>
+      <form action="/profile/login/" method="POST">
+        <div class="row">
+          <label>Username:</label>
+          <input type="text" name="username" autofocus />
+        </div>
+        <div class="row">
+          <label>Password:</label>
+          <input type="password" name="password" />
+        </div>
+        <div class="row">
+            <label></label>
+            <button type="submit">Log in</button>
+        </div>
+        
+        {% csrf_token %}
+        <input type="hidden" name="next" value="{{ next }}" />
+      </form>
+      {% if registrations_are_active %}
+        <form action="/profile/register/" method="GET">
+          <button type="submit">Register a new account</button>
+        </form>
+      {% endif %}
+    </main>
+  </div>
+{% endblock %}

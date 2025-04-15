@@ -1,0 +1,39 @@
+{% extends 'header.html' %}
+
+{% block content %}
+  <div class="overlay" id="loading-overlay">
+    <div id="loading">Please Wait While The Syncing Loads...</div>
+  </div>
+  <div class="overlay" id="settings-overlay"></div>
+  <meta name="bookFilepath" content="{{ book_filepath }}" />
+  <meta name="audioFilepath" content="{{ audiobook.name }}" />
+  <meta name="book_id" content="{{ book_id }}" />
+  <meta name="medium" content="{{ medium }}" />
+  <meta name="audio_location" content="{{ audio_location }}" />
+  <meta name="ebook_location" content="{{ ebook_location }}" />
+  <meta name="custom-epub-default" content="{{ custom_epub_default }}" />
+  <meta name="last_read_at" content="{{ last_read_at }}">
+  <meta name="progress_percentage" content="{{ progress_percentage }}">
+  <meta name="time_remaining" content="{{ time_remaining }}">
+
+  <div class="centermain">
+    <main>
+      {% if book_filepath != None %}
+        {% include 'epubplayer.html' %}
+      {% else %}
+      <div id="player-lib-grid">
+        {% include 'librarygrid.html' %}
+      </div>
+      {% endif %}
+      {% if audiobook != None %}
+        {% include 'audioplayer.html' %}
+      {% endif %}
+    </main>
+  </div>
+  <div>
+    {% include 'textsearchresults.html' %}
+  </div>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.1.5/jszip.min.js"></script>
+  <script type="module" src="/static/js/epub.min.js"></script>
+  <script type="module" src="/static/js/wispar-reader.js"></script>
+{% endblock %}

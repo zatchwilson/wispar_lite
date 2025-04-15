@@ -1,0 +1,17 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class=centermain>
+    <main>
+        <h2>Wispar Profile</h2>
+        <div class="actionBox">
+            <span>Currently logged in as {{ user }}.</span>
+            <form action="/profile/logout/">
+                <button id="logout-button" type="submit">Log out</button>
+            </form>
+
+        </div>
+    </main>
+    </div>
+{% endblock %}
+

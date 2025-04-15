@@ -1,0 +1,15 @@
+{% extends 'header.html' %}
+
+{% block content %}
+<div class=centermain>
+    <main>
+        <div class="tab">
+            <button id="gutenberg" class="srcbutton active" onclick="changeSrc('gutenberg')">Gutenberg</button>
+            <button id="librivox" class="srcbutton" onclick="changeSrc('librivox')">Librivox</button>
+        </div>
+        <iframe src="https://www.gutenberg.org/browse/scores/top"
+         name="iframe_downloader" id="iframe_downloader" title="Project Gutenberg" width="100%" height="80%"></iframe>
+    </main>
+</div>
+<script type="module" src="../static/js/downloader.js"></script>
+{% endblock %}
