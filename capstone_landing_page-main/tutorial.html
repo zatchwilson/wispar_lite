@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<!--
+	Hyperspace by HTML5 UP
+	html5up.net | @ajlkn
+	Free for personal and commercial use under the CCA 3.0 license (html5up.net/license)
+-->
+<html>
+	<head>
+		<title>Wispar Tutorial</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+	</head>
+	<body class="is-preload">
+
+		<!-- Sidebar -->
+			<section id="sidebar">
+				<div class="inner">
+					<nav>
+						<ul>
+							<li><a href="#intro">Welcome</a></li>
+							<li><a href="#one">Deploying Wispar</a></li>
+							<li><a href="#two">Wispar Walkthrough</a></li>
+						</ul>
+					</nav>
+				</div>
+			</section>
+
+		<!-- Wrapper -->
+			<div id="wrapper">
+
+				<!-- Intro -->
+					<section id="intro" class="wrapper style1 fullscreen fade-up">
+						<div class="inner">
+							<h1>Wispar Tutorial</h1>
+							<p>Wispar is meant to be run as a series of docker containers. As such, your system will require a certain amount of free resources, you will need a domain name, and will need a way to access your server from outside of your network. This page covers deployment steps, as well as many of the features included with Wispar.</p>
+							<ul class="actions">
+								<li><a href="index.html" class="button scrolly">Back to Home</a></li>
+							</ul>
+						</div>
+					</section>
+
+				<!-- One -->
+					<section id="one" class="wrapper style2">
+						<div class="inner">
+							<h2>Deploying Wispar</h1>
+							<p>In order to run Wispar, you will need to prepare your system in a few specific ways. First and foremost, you must <a href="download.html" id="download-link">clone or download</a> the project onto your filesystem. You will also need to install Python, install Docker, own a Domain, and self host the instance.</p>
+							
+							<h2>Python</h2>
+							<p>The first thing you need to do in order to run Wispar is have Python installed, as well as any of the dependent packages in the <code>deploy.py</code> script. In no particular order, you will need <code>dotenv</code>, <code>pathlib</code>, <code>getpass</code>, <code>re</code>, <code>string</code>, <code>secrets</code>, <code>subprocess</code>, and <code>os</code>. Most of these should already be installed, but some may need to be installed using <code>pip</code> as well.</p>
+							<h2>Docker</h2>
+
+							<h3>Download Docker</h3>
+							<p>Wispar works as a series of Docker Containers on your machine, communicating in tandem to host, manage, and serve your books. Because of this, if you do not have Docker installed you will need to navigate to the <a target="_blank" href="https://docs.docker.com/get-started/get-docker/">Docker download page</a>, and choose the download that's right for your system.</p>
+							
+							<h3>Creating Docker Containers</h3>
+							<p>Thanks to the simple deployment script, deploy.py, the only thing you have to do once you've downloaded Docker is, in the root folder of the project, run the command <code>python deploy.py</code>. This will guide your through the process of creating a database password, an admin username/password, and configuring a few special settings. Once this is done, an .env file will be created, which will be used to configure your Wispar instance and get it up and running. This process may take some time, but at the end of it you should have three running containers.</p>
+							
+							<h2>Cloudflare/Domain Name</h2>
+							<p>This step can be modified depending on how tech savvy you are, but the following is the recommended way to have free access to your Wispar instance from outside your own network.</p>
+							
+							<h3>Domain Name</h3>
+							<p>The first step is to have a domain name you own and have access to. This can be bought from a variety of places, like <a target="_blank" href="https://www.namecheap.com/">NameCheap</a>, <a target="_blank" href="https://www.domain.com/domains">Domains.com</a>, or <a target="_blank" href="https://domains.squarespace.com/">Squarespace</a>.</p>
+							
+							<h3>Clouflare Account</h3>
+							<p>Once you have your domain, we recommend setting up a <a target="_blank" href="https://dash.cloudflare.com/login">free Cloudflare account</a>. From here, you will be able to set up your domain to point to your running instance of Wispar. First, you'll need to add a domain. You can find the steps to do so <a target="_blank" href="https://developers.cloudflare.com/fundamentals/setup/manage-domains/add-site/">here</a>. You can leave the records alone, but will need to also update the nameservers, which can be done with the registrar you bought the domain from.</p>
+							<p>Following this, we will be setting up a Cloudflare Zero Trust account. Zero Trust is a free and easy way to get access to your Wispar instance. The free tier has more than enough security features, tools, and active seats to make sure only authorized users gain access. We will be creating a Self Hosted <a target="_blank" href="https://developers.cloudflare.com/cloudflare-one/applications/configure-apps/self-hosted-public-app/">Access Application</a>, creating and connecting your <a target="_blank" href="https://developers.cloudflare.com/cloudflare-one/connections/connect-networks/get-started/create-remote-tunnel/">Wispar instance to a tunnel</a>, and eventually be able to access Wispar. The links above will help you get this configured.</p>
+							<p><strong>NOTE: WISPAR, BY DEFAULT, RUNS ON PORT 1337, SO THE URL FOR YOUR TUNNEL MUST BE "localhost:1337"</strong>. If you would like to change this, you will need to change the port used by Wispar in the Docker-Compose file. Just change the port number from '1337' to the specific port you would like to use. We also recommend to keep your access policies as strict as possible.</p>
+							<p>After this is done, and your Wispar instance is up and running on your machine, congratulations! You should be able to navigate to your domain, login through Cloudflare, and access Wispar!</p>
+						</div>
+					</section>
+
+				<!-- Two -->
+					<section id="two" class="wrapper style3 fade-up">
+						<div class="inner">
+							<h2>Wispar Walkthrough</h2>
+							<h3>Login and Homepage</h3>
+							<p>When first logging into a Wispar instance, users will be greeted with a basic login page. Admin user(s) will be able to login using the username and password configured when running the deployment script. Other users with access to the instance will also be able to register new accounts.</p>
+							<span class="image fit"><img src="images/login.jpg" alt="An image of the Wispar login screen, with the Username being 'Admin' and the password filled in as well."/></span>
+							
+							<p>Once a user has logged into the instance, they will be greeted with the basic Wispar homepage. This homepage displays important information about the books in the library, such as when they were last read, current progress, and the medium (textual or auditory) they were uploaded as. Books can be read by clicking on their specific card, after which they can be read or listened to.</p>
+							<span class="image fit"><img src="images/homepage.jpg" alt="An image of the Wispar homepage, with two rows being shown. One for 'recently read' books, and another for 'recently added'."/></span>
+							<p>Users will also be able to navigate to the other pages inside of Wispar by using the sidebar. Depending on the current permissions the user has, they will be able to view their library, browse for other books to download, view their profile, manage users on their instance, and upload/manage content.</p>
+						
+							<h3>Profile Settings</h3>
+							<p>From the 'Profile' screen, users will be able to change their theme, UI style, fonts, and homescreen. Users can also choose to override the default black & white theme used by the ebook reader, instead using their current theme.</p>
+							<h3>User Management</h3>
+							<p>Only users with the correct permissions will be able to access this page <em>(Admin users have access to all settings).</em> From this page, authorized users can manage other user's current role, delete users, or create new roles with specific permissions.</p>
+							<p>The admin user for the instance can also enable/disable registration, further locking down who does and doesn't have access.</p>
+							<span class="image fit"><img src="images/user_management.jpg" alt="An image of the user management page, showing 4 users, two with the parent role and two with the child role. There is also a menu for creating new roles, and a button for enabling or disabling new user registrations."/></span>
+
+							<h3>Content</h3>
+							<p>From the content page, authorized users can upload content. The preferred content types are .epub and .m4b, but Wispar will automatically convert textual or auditory files to allow for wider compatability. If both the ebook and audiobook are uploaded for a book, Wispar will merge them into one 'card', where both mediums of the book can be accessed.</p>
+							<p>Users can also edit the metadata of their books by selecting it while on the content page. Once selected, user can change anything from the Title to the ISBN. The cover photo can also be changed by clicking on the current cover image. Books can also be restricted <em>(by Admin users only)</em>, keeping them from being viewed by specific user groups.</p>
+							<span class="image fit"><img src="images/metadata.jpg" alt="An image of the metadata for the book 'Sherlock Holmes' being changed, with various text boxes to change metadata, and different covers to use."/></span>
+
+							<h3>Ebook Reader and Audiobook Player</h3>
+							<p>Once ebooks and audiobooks have been uploaded, they can be read and/or listened to. When in the 'Library' or 'Home' pages, books can be accessed with by clicking on their title card.</p>
+							<p>The ebook reader comes with a number of features. By selecting a section of text, users can choose to highlight, bookmark, define, or lookup a word/phrase on Wikipedia. Users can also select the cog in the upper right corner to configure their ebook reader, selecting their preferred font, font size, and line-spacing.  </p>
+							<p>To access their highlights or bookmarks, users can select the dropdown in the upper right-hand corner. This will display any highlights or bookmarks they've created. Users can also access the table of contents at any time by selecting the dropdown in the upper left-hand corner. Selecting a chapter will jump you to that position in the book.</p>
+							<span class="image fit"><img src="images/highlight.jpg" alt="A passage of text from the book 'The Martian' that has been selected. The text selection has options for highlighting, bookmarking, defining, and 'Wiki'ing the text."/></span>
+							<span class="image fit"><img src="images/book_settings.jpg" alt="A settings modal inside of a book being read. The modal has options to change font, font size, and line spacing."/></span>
+
+							<p>For books that are audio only/have both the ebook and audiobook uploaded, an audio player will be usable on the bottom of the screen. Using the audiobook player users can jump to a specific location in the book, modify playback speed, fast-forward, rewind, set a sleep timer, and adjust volume.</p>
+							<p>If both the ebook and audiobook have been uploaded for a specific title, readers can use a feature known as <strong><em>forced alignment</em></strong> to sync the textual and auditory progress of their book, in real time. When this occurs, playing the audiobook will cause the currently-spoken word to be highlighted on the ebook. This is an extremely helpful feature when consuming hard to read books, books in foreign languauges, or in any other circumstance where you want to read while you listen!</p>
+							<span class="image fit"><img src="images/alignment.jpg" alt="A passage from 'The Martian' showing the currently spoken text of the audiobook being highlighted on the page."/></span>
+							<ul class="actions">
+								<li><a href="index.html" class="button scrolly">Back to Home</a></li>
+							</ul>
+						</div>
+					</section>
+
+			</div>
+
+		<!-- Footer -->
+			<footer id="footer" class="wrapper style1-alt">
+				<div class="inner">
+					<ul class="menu">
+						<li>&copy; Wispar. All rights reserved.</li><li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
+					</ul>
+				</div>
+			</footer>
+
+		<!-- Scripts -->
+			<script src="assets/js/jquery.min.js"></script>
+			<script src="assets/js/jquery.scrollex.min.js"></script>
+			<script src="assets/js/jquery.scrolly.min.js"></script>
+			<script src="assets/js/browser.min.js"></script>
+			<script src="assets/js/breakpoints.min.js"></script>
+			<script src="assets/js/util.js"></script>
+			<script src="assets/js/main.js"></script>
+
+	</body>
+</html>
